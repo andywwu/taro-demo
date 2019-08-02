@@ -1,0 +1,96 @@
+@import "~taro-ui/dist/style/components/list.scss";
+@import "~taro-ui/dist/style/components/switch.scss";
+@import "~taro-ui/dist/style/components/modal.scss";
+@import "~taro-ui/dist/style/components/progress.scss";
+@import "~taro-ui/dist/style/components/modal.scss";
+// @import "~taro-ui/dist/style/components/card.scss";
+
+page{
+	background: #f8f8f8;
+}
+.voice-main{
+	padding: 24rpx;
+}
+.voice-list{
+	padding: 24rpx;
+}
+.list-warp{
+	margin-bottom: 200rpx;
+}
+.play-card{
+	margin: 24rpx 0;
+	background:#FFFFFF;
+	background: #FFFFFF;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15);
+	border-radius: 4px;
+}
+.play-card{
+	color: #999;
+	font-size: 28rpx;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	line-height:1.5;
+	.play-title{
+		font-size: 32rpx;
+		color: #333;
+	}
+	.play-info{
+		display: flex;
+		justify-content: space-between;
+	}
+}
+.voice-list-item{
+	&:after{
+		content: none;
+	}
+}
+.play-footer{
+	height: 96rpx;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-top: 1rpx solid #e4e4e4;
+	>Image{
+		height: 40rpx;
+		width: 40rpx;
+	}
+}
+.play-content{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 20rpx;
+	margin: 32rpx 0;
+	.play-process{
+		flex: 1;
+		position: relative;
+		slider{
+			margin: 20rpx;
+		}
+		Text{
+			width: 40rpx;
+		}
+	}
+	.play-ico{
+		width: 32rpx;
+		height: 44rpx;
+		margin-right: 24rpx;
+	}
+}
+.add-record{
+	border: 2px solid #C9082F;
+	border-radius: 4px;
+	font-size: 36rpx;
+	color: #C9062C;
+	background: #fff;
+}
+.addbtn-wrap{
+	padding: 40rpx;
+	position:fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	box-sizing: border-box;
+}

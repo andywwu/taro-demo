@@ -1,0 +1,56 @@
+page{
+  background: #fff;
+  height: 100%;
+}
+.test-container{
+  padding: 0 70rpx 0 68rpx;
+  font-family: PingFangSC-Regular;
+  font-size: 32rpx;
+  color: #3D3D3D;
+  letter-spacing: 0;
+  line-height: 52rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+.test-item{
+  margin-top: 60rpx;
+  flex: 1;
+}
+.answer-list{
+  margin: 0rpx 46rpx;
+}
+.answer-label{
+  display: block;
+  margin-top: 40rpx;
+}
+radio .wx-radio-input{ 
+display: flex;
+border-radius: 8rpx;
+border:4rpx solid #6D6D6D;
+height: 40rpx; 
+width: 40rpx;
+margin-right: 72rpx
+}
+.btn-wrap{
+  padding-bottom: 84rpx;
+}
+.add-btn{
+	border: 2px solid #C9082F;
+	border-radius: 4px;
+	font-size: 36rpx;
+	color: #C9062C;
+	background: #fff;
+}
+.no-test{
+  font-family: PingFangSC-Regular;
+  font-size: 36rpx;
+  color: #3D3D3D;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 52rpx;
+  display: flex;
+  flex:1;
+  align-items: center;
+}
