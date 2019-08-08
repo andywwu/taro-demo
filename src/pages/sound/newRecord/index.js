@@ -18,28 +18,36 @@ const options = {
 }))
 class CreateRecordPage extends Component {
   config = {
-    navigationBarTitleText: '语音录制'
+    usingComponents: {
+      'nav-bar': '../../../components/navigator-bar/navigator-bar' // 书写第三方组件的相对路径
+    },
   }
-  state={
+  state = {
     time: 0,
     beginRecord: false,
     total: 0,
     file: null,
     currentTime: 0,
     play: true,
+    navbarData: {
+      backgroundColor: '#fff', //导航栏背景颜色
+      backType: 'backhome', //返回按钮类型
+      backImg: 'white', //返回按钮的颜色
+      title: '开始录音',
+    },
   }
   componentWillMount() {
     this.recorderManager = Taro.getRecorderManager()
     this.recorderManager.onStop((res) => {
-      if(res.duration < 2000){
+      if (res.duration < 2000) {
         wx.showToast({
           title: '录音时间太短',
           icon: 'none',
           duration: 1000
         })
-      }else {
+      } else {
         this.setState({
-          total: res.duration/1000,
+          total: res.duration / 1000,
           file: res.tempFilePath,
         })
         this.innerAudioContext.src = res.tempFilePath;
@@ -53,7 +61,7 @@ class CreateRecordPage extends Component {
     this.innerAudioContext.onTimeUpdate(() => {
       const { currentTime, duration } = this.state
       this.setState({
-        currentTime: parseInt(currentTime) ===  parseInt(duration) ? this.innerAudioContext.duration : this.innerAudioContext.currentTime,
+        currentTime: parseInt(currentTime) === parseInt(duration) ? this.innerAudioContext.duration : this.innerAudioContext.currentTime,
         total: this.innerAudioContext.duration,
       })
     })
@@ -65,9 +73,9 @@ class CreateRecordPage extends Component {
     })
   }
   actionRecord = (action) => {
-    if(action){
+    if (action) {
       this.innerAudioContext.pause()
-    }else {
+    } else {
       this.innerAudioContext.play()
     }
     this.setState({
@@ -103,16 +111,16 @@ class CreateRecordPage extends Component {
     })
     this.recorderManager.start(options)
     this.timer = setInterval(() => {
-      if(this.state.time > 9){
+      if (this.state.time > 9) {
         clearInterval(this.timer)
         this.recorderManager.stop()
         this.setState({
           time: 0,
           beginRecord: false,
         })
-      }else {
+      } else {
         this.setState({
-          time: this.state.time +=1,
+          time: this.state.time += 1,
         })
       }
     }, 1000)
@@ -126,28 +134,36 @@ class CreateRecordPage extends Component {
       time: 0,
     })
   }
-  componentWillUnmount () {
-    if(this.innerAudioContext){
+  componentWillUnmount() {
+    if (this.innerAudioContext) {
       this.innerAudioContext.destroy()
     }
-    if(this.recorderManager){
+    if (this.recorderManager) {
       this.recorderManager.stop()
     }
   }
-  componentDidHide () { }
-  render () {
+  componentDidHide() { }
+  render() {
     const { beginRecord, file, currentTime, total, play } = this.state
     return (
       <View className='record-wrap'>
-        { !file ? (
-          <View style={{textAlign: 'center'}}>
+        <nav-bar
+          title={navbarData.title}
+          background={navbarData.backgroundColor}
+          back
+          fixed
+          redirectUrl='test'
+          onTap={this.testTap}
+        />
+        {!file ? (
+          <View style={{ textAlign: 'center' }}>
             <View className='record-time'>
               <Text>{formatSeconds(this.state.time)}</Text>
             </View>
             <View className='record-action'>
               <Image className={beginRecord ? 'animation' : null} src='https://mxchip-test.oss-cn-shanghai.aliyuncs.com/img_sources/sound-ring@2x.png' />
-              <Image 
-                src='https://mxchip-test.oss-cn-shanghai.aliyuncs.com/img_sources/microphone@2x.png' 
+              <Image
+                src='https://mxchip-test.oss-cn-shanghai.aliyuncs.com/img_sources/microphone@2x.png'
                 onTouchstart={this.handleRecordStart}
                 onTouchEnd={this.handleRecordEnd}
               />
@@ -157,52 +173,52 @@ class CreateRecordPage extends Component {
             </Text>
           </View>
         ) : (
-          <View>
-            <View className='play-content'>
-              { play ? (
-                <Image
-                  src='https://mxchip-test.oss-cn-shanghai.aliyuncs.com/img_sources/update_pause@2x.png'
-                  className='play-ico'
-                  onClick={() => this.actionRecord(true)} 
-                />
-              ) : (
-                <Image
-                  src='https://mxchip-test.oss-cn-shanghai.aliyuncs.com/img_sources/broadcast_small@2x.png'
-                  className='play-ico'
-                  onClick={() => this.actionRecord(false)}
-                />
-              )}
-              <Text>{formatSeconds(currentTime)}</Text>
-              <View className='play-process'>
-                <Slider
-                  step={1}
-                  value={parseInt(currentTime)}
-                  max={parseInt(total)}
-                  min={0}
-                  activeColor='#C9062C'
-                  backgroundColor='#e9e9e9'
-                  blockColor='#C9062C'
-                  blockSize={12}
-                />
+            <View>
+              <View className='play-content'>
+                {play ? (
+                  <Image
+                    src='https://mxchip-test.oss-cn-shanghai.aliyuncs.com/img_sources/update_pause@2x.png'
+                    className='play-ico'
+                    onClick={() => this.actionRecord(true)}
+                  />
+                ) : (
+                    <Image
+                      src='https://mxchip-test.oss-cn-shanghai.aliyuncs.com/img_sources/broadcast_small@2x.png'
+                      className='play-ico'
+                      onClick={() => this.actionRecord(false)}
+                    />
+                  )}
+                <Text>{formatSeconds(currentTime)}</Text>
+                <View className='play-process'>
+                  <Slider
+                    step={1}
+                    value={parseInt(currentTime)}
+                    max={parseInt(total)}
+                    min={0}
+                    activeColor='#C9062C'
+                    backgroundColor='#e9e9e9'
+                    blockColor='#C9062C'
+                    blockSize={12}
+                  />
+                </View>
+                <Text>{formatSeconds(total)}</Text>
               </View>
-              <Text>{formatSeconds(total)}</Text>
-            </View>
-            <View className='play-footer'>
-              <Button 
-                className='reply-record'
-                onClick={() => this.setState({ file: null })}
-              >
-                重新录制
+              <View className='play-footer'>
+                <Button
+                  className='reply-record'
+                  onClick={() => this.setState({ file: null })}
+                >
+                  重新录制
               </Button>
-              <Button 
-                className='play-submit'
-                onClick={this.handleSubmitRecord}
-              >
-                确定
+                <Button
+                  className='play-submit'
+                  onClick={this.handleSubmitRecord}
+                >
+                  确定
               </Button>
+              </View>
             </View>
-          </View>
-        )}
+          )}
       </View>
     )
   }

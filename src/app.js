@@ -5,7 +5,6 @@ import { Provider } from '@tarojs/redux'
 import Index from './pages/index'
 
 import configStore from './store'
-
 import './app.scss'
 
 const store = configStore()
@@ -29,15 +28,15 @@ class App extends Component {
     }
   }
 
-  componentDidMount () {}
+  componentDidMount() { }
 
-  componentDidShow () {}
+  componentDidShow() { }
 
-  componentDidHide () {}
+  componentDidHide() { }
 
-  componentCatchError () {}
+  componentCatchError() { }
 
-  render () {
+  render() {
     return (
       <Provider store={store}>
         <Index />

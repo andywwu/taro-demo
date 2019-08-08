@@ -14,7 +14,7 @@ class CoachPage extends Component {
       'nav-bar': '../../components/navigator-bar/navigator-bar' // 书写第三方组件的相对路径
     },
   }
-  state={
+  state = {
     navbarData: {
       backgroundColor: '#f5f5f5', //导航栏背景颜色
       backType: 'backhome', //返回按钮类型
@@ -24,17 +24,17 @@ class CoachPage extends Component {
   }
   componentWillMount() {
   }
-  componentWillUnmount () {
-    
+  componentWillUnmount() {
+
   }
-  componentDidHide () { }
-  render () {
+  componentDidHide() { }
+  render() {
     const { navbarData } = this.state;
     return (
       <View className='coach-container'>
-        <nav-bar 
+        <nav-bar
           title={navbarData.title}
-          background={navbarData.backgroundColor} 
+          background={navbarData.backgroundColor}
           back
           fixed
         >
@@ -45,20 +45,20 @@ class CoachPage extends Component {
           </Text>
           <View className='plan-list'>
             <View className='plan-item'>
-              <View 
-                className='item-left' 
+              <View
+                className='item-left'
               >
                 <Text>暂无训练</Text>
                 <Text>
                   请前往测试，可获得训练
                 </Text>
               </View>
-              <Image 
+              <Image
                 className='item-right'
-                onClick={() => wx.navigateTo({
+                onClick={() => Taro.navigateTo({
                   url: '/pages/coach/test/index',
                 })}
-                src='https://mxchip-test.oss-cn-shanghai.aliyuncs.com/img_sources/enter.png' 
+                src='https://mxchip-test.oss-cn-shanghai.aliyuncs.com/img_sources/enter.png'
               />
             </View>
           </View>
@@ -70,13 +70,13 @@ class CoachPage extends Component {
           <View className='custom-grid'>
             <View className='custom-item'>
               <View className='custom-wrap'>
-                <Image style={{ height: '72rpx', width: '72rpx'}} src='https://mxchip-test.oss-cn-shanghai.aliyuncs.com/img_sources/time_small@2x.png' />
+                <Image style={{ height: '72rpx', width: '72rpx' }} src='https://mxchip-test.oss-cn-shanghai.aliyuncs.com/img_sources/time_small@2x.png' />
                 <Text>心率控制</Text>
               </View>
             </View>
             <View className='custom-item'>
               <View className='custom-wrap'>
-                <Image style={{height: '48rpx', width: '96rpx'}} src='https://mxchip-test.oss-cn-shanghai.aliyuncs.com/img_sources/step@2x.png' />
+                <Image style={{ height: '48rpx', width: '96rpx' }} src='https://mxchip-test.oss-cn-shanghai.aliyuncs.com/img_sources/step@2x.png' />
                 <Text>论持久战</Text>
               </View>
             </View>
@@ -88,7 +88,7 @@ class CoachPage extends Component {
             </View>
             <View className='custom-item'>
               <View className='custom-wrap'>
-                <Image style={{width: '54rpx', height: '73rpx'}} src='https://mxchip-test.oss-cn-shanghai.aliyuncs.com/img_sources/calorie_small@2x.png' />
+                <Image style={{ width: '54rpx', height: '73rpx' }} src='https://mxchip-test.oss-cn-shanghai.aliyuncs.com/img_sources/calorie_small@2x.png' />
                 <Text>燃烧吧，卡路里</Text>
               </View>
             </View>
@@ -100,7 +100,7 @@ class CoachPage extends Component {
           </Text>
           <View className='search-device'>
             <Text>搜索绑定附近的心率设备</Text>
-            <Image style={{ height: '50rpx', width: '50rpx'}} src='https://mxchip-test.oss-cn-shanghai.aliyuncs.com/img_sources/time_small@2x.png' />
+            <Image style={{ height: '50rpx', width: '50rpx' }} src='https://mxchip-test.oss-cn-shanghai.aliyuncs.com/img_sources/time_small@2x.png' />
           </View>
         </View>
       </View>

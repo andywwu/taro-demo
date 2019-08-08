@@ -4,9 +4,9 @@ import { connect } from '@tarojs/redux'
 import {
   AtList,
   AtListItem,
-  AtModal,  
-  AtModalHeader, 
-  AtModalContent, 
+  AtModal,
+  AtModalHeader,
+  AtModalContent,
   AtModalAction,
 } from "taro-ui"
 import { formatSeconds } from '../../tools/time'
@@ -19,7 +19,9 @@ import './index.scss'
 }))
 class SoundsPage extends Component {
   config = {
-    navigationBarTitleText: '语音',
+    usingComponents: {
+      'nav-bar': '../../../components/navigator-bar/navigator-bar' // 书写第三方组件的相对路径
+    },
   }
   state = {
     currentTime: 0,
@@ -28,6 +30,12 @@ class SoundsPage extends Component {
     modalVisible: false,
     recordAuth: false,
     recordVisible: false,
+    navbarData: {
+      backgroundColor: '#f5f5f5', //导航栏背景颜色
+      backType: 'backhome', //返回按钮类型
+      backImg: 'white', //返回按钮的颜色
+      title: '语音',
+    },
   }
   componentWillMount() {
     console.log('onload')
@@ -72,7 +80,7 @@ class SoundsPage extends Component {
               })
             }
           })
-        }else {
+        } else {
           _.setState({
             recordAuth: true,
           })
@@ -87,7 +95,7 @@ class SoundsPage extends Component {
   openRecordFn = () => {
     const _ = this;
     wx.openSetting({
-      success(res){
+      success(res) {
         _.setState({
           recordAuth: res.authSetting['scope.record'],
         })
@@ -119,7 +127,7 @@ class SoundsPage extends Component {
     })
   }
   playRecord = (player) => {
-    if(player.id !== this.state.id){
+    if (player.id !== this.state.id) {
       this.innerAudioContext.stop()
       this.setState({
         id: player.id,
@@ -150,11 +158,17 @@ class SoundsPage extends Component {
   }
   render() {
     const { global, record } = this.props
-    console.log('子页面')
-    const { currentTime, total, id, modalVisible, recordAuth, recordVisible } = this.state
+    const { currentTime, total, id, modalVisible, recordAuth, recordVisible, navbarData } = this.state
     const { recordList } = record
+    console.log(recordAuth)
     return (
       <View className='voice-wrap'>
+        <nav-bar
+          title={navbarData.title}
+          background={navbarData.backgroundColor}
+          fixed
+          back
+        />
         <View className='voice-main'>
           <AtList>
             <AtListItem
@@ -166,7 +180,7 @@ class SoundsPage extends Component {
             />
           </AtList>
         </View>
-        { recordAuth && (
+        {recordAuth && (
           <View className='voice-list'>
             <View className='list-warp'>
               {recordList.map((item) => {
@@ -176,11 +190,6 @@ class SoundsPage extends Component {
                       className='voice-list-item'
                       key={item.id}
                       title={`录音${item.id}`}
-                      note={`${item.day} 00:${item.musicLength}`}
-                      switchColor='#C9062C'
-                      isSwitch
-                      switchIsCheck={item.checked}
-                      onSwitchChange={this.handleOpenRecordSwitch}
                     />
                   </AtList>
                 ) : (
@@ -225,18 +234,18 @@ class SoundsPage extends Component {
                                 blockSize={12}
                                 onChange={e => this.changePlayTime(e)}
                               />
-                            ):(
-                              <Slider
-                                step={1}
-                                value={0}
-                                max={0}
-                                activeColor='#C9062C'
-                                backgroundColor='#e9e9e9'
-                                blockColor='#C9062C'
-                                blockSize={12}
-                                onChange={e => this.changePlayTime(e)}
-                              />
-                            )}
+                            ) : (
+                                <Slider
+                                  step={1}
+                                  value={0}
+                                  max={0}
+                                  activeColor='#C9062C'
+                                  backgroundColor='#e9e9e9'
+                                  blockColor='#C9062C'
+                                  blockSize={12}
+                                  onChange={e => this.changePlayTime(e)}
+                                />
+                              )}
                           </View>
                           <Text>{item.id === id ? formatSeconds(total) : '00:00'}</Text>
                         </View>
@@ -252,7 +261,7 @@ class SoundsPage extends Component {
               })}
             </View>
             <View className='addbtn-wrap'>
-              <Button 
+              <Button
                 className='add-record'
                 onClick={this.handleAddRecord}
               >
@@ -265,7 +274,7 @@ class SoundsPage extends Component {
           isOpened={modalVisible}
           cancelText='取消'
           confirmText='确认'
-          onCancel={() => this.setState({modalVisible: false})}
+          onCancel={() => this.setState({ modalVisible: false })}
           onConfirm={this.handleDelRecord}
           content='是否要删除该录音'
         />
@@ -274,9 +283,9 @@ class SoundsPage extends Component {
           <AtModalContent>
             是否要进入到录音设置页面？
           </AtModalContent>
-          <AtModalAction> 
-            <Button onClick={() => this.setState({recordVisible: false})}>取消</Button> 
-            <Button onClick={() => this.openRecordFn()}>确定</Button> 
+          <AtModalAction>
+            <Button onClick={() => { this.setState({ recordVisible: false }) }}>取消</Button>
+            <Button onClick={() => this.openRecordFn()}>确定</Button>
           </AtModalAction>
         </AtModal>
       </View>
